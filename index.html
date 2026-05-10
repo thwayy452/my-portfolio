@@ -119,6 +119,54 @@
     .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
     .reveal.in{opacity:1;transform:translateY(0);}
 
+    /* PRELOADER */
+    #preloader{
+      position:fixed;inset:0;z-index:9999;
+      background:#0a0a0a;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      transition:opacity 0.7s ease, visibility 0.7s;
+    }
+    #preloader.done{opacity:0;visibility:hidden;pointer-events:none;}
+    .pre-logo{
+      font-size:34px;font-weight:700;letter-spacing:-0.04em;
+      color:#f5f5f7;
+      display:flex;align-items:center;gap:2px;
+      opacity:0;
+      animation:preFadeIn 0.6s ease 0.2s forwards;
+    }
+    .pre-dot{
+      color:#0071e3;
+      animation:preBlink 1.2s ease-in-out infinite;
+    }
+    .pre-bar{
+      width:160px;height:1.5px;
+      background:rgba(255,255,255,0.08);
+      margin-top:28px;
+      overflow:hidden;
+      border-radius:2px;
+      opacity:0;
+      animation:preFadeIn 0.6s ease 0.4s forwards;
+    }
+    .pre-bar-fill{
+      width:30%;height:100%;
+      background:#0071e3;
+      animation:preSlide 1.4s ease-in-out infinite;
+    }
+    .pre-text{
+      margin-top:18px;
+      font-size:11px;font-weight:500;
+      letter-spacing:0.2em;text-transform:uppercase;
+      color:rgba(255,255,255,0.3);
+      opacity:0;
+      animation:preFadeIn 0.6s ease 0.6s forwards;
+    }
+    @keyframes preFadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes preBlink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+    @keyframes preSlide{
+      0%{transform:translateX(-100%);}
+      100%{transform:translateX(450%);}
+    }
+
     @media(max-width:768px){
       nav{padding:0 20px;}
       .nav-links{display:none;}
@@ -137,6 +185,12 @@
   </style>
 </head>
 <body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pre-logo">Thwvy<span class="pre-dot">.</span></div>
+  <div class="pre-bar"><div class="pre-bar-fill"></div></div>
+</div>
 
 <nav>
   <span class="nav-logo">Thwvy</span>
@@ -253,6 +307,13 @@
 </footer>
 
 <script>
+  // Preloader - hide once everything is loaded
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.getElementById('preloader').classList.add('done');
+    }, 600);
+  });
+
   // Scroll reveal
   const els = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver(e => { e.forEach(x => { if (x.isIntersecting) x.target.classList.add('in'); }); }, { threshold: 0.1 });
