@@ -119,6 +119,168 @@
     .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
     .reveal.in{opacity:1;transform:translateY(0);}
 
+    /* HOVER WORD ANIMATIONS */
+    .hw {
+      display: inline-block;
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* 3D designs — 3D tilt + scale */
+    .hw-3d {
+      transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), color 0.3s ease, text-shadow 0.4s ease;
+      transform-origin: center;
+    }
+    .hw-3d:hover {
+      transform: perspective(500px) rotateY(18deg) rotateX(-8deg) scale(1.08);
+      color: #0071e3;
+      text-shadow: 2px 2px 0 rgba(0,113,227,0.25), 4px 4px 0 rgba(0,113,227,0.15);
+    }
+
+    /* graphics — gradient color sweep */
+    .hw-graphic {
+      background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.9) 50%, #0071e3 50%, #0071e3 100%);
+      background-size: 200% 100%;
+      background-position: 0% 0%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: background-position 0.6s cubic-bezier(0.65,0,0.35,1), transform 0.4s ease;
+    }
+    .hw-graphic:hover {
+      background-position: -100% 0%;
+      transform: scale(1.05);
+    }
+
+    /* motion animations — letter wave bounce */
+    .hw-motion .l {
+      display: inline-block;
+      transition: color 0.2s ease;
+    }
+    .hw-motion:hover .l {
+      animation: letterWave 0.8s cubic-bezier(0.34,1.56,0.64,1);
+      color: #0071e3;
+    }
+    @keyframes letterWave {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      30% { transform: translateY(-10px) rotate(-3deg); }
+      60% { transform: translateY(0) rotate(2deg); }
+    }
+
+    /* HOVER POPUP VISUALS */
+    .hero-popup {
+      position: relative;
+      width: 100%;
+      height: 90px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .hero-popup .v {
+      position: absolute;
+      opacity: 0;
+      transform: scale(0.3) translateY(20px);
+      transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    /* 3D CUBE */
+    .v-3d {
+      width: 70px; height: 70px;
+      perspective: 600px;
+    }
+    .cube {
+      width: 100%; height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: cubeSpin 5s linear infinite;
+    }
+    .cube .face {
+      position: absolute;
+      width: 70px; height: 70px;
+      background: rgba(0,113,227,0.85);
+      border: 1.5px solid #0071e3;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+    }
+    .cube .f1 { transform: translateZ(35px); }
+    .cube .f2 { transform: rotateY(180deg) translateZ(35px); }
+    .cube .f3 { transform: rotateY(90deg) translateZ(35px); background: rgba(0,113,227,0.65); }
+    .cube .f4 { transform: rotateY(-90deg) translateZ(35px); background: rgba(0,113,227,0.65); }
+    .cube .f5 { transform: rotateX(90deg) translateZ(35px); background: rgba(0,113,227,1); }
+    .cube .f6 { transform: rotateX(-90deg) translateZ(35px); background: rgba(0,113,227,0.5); }
+    @keyframes cubeSpin {
+      0% { transform: rotateX(0) rotateY(0); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    /* GRAPHIC BLOBS */
+    .v-graphic {
+      width: 140px; height: 80px;
+      position: absolute;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+      transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+      opacity: 0;
+      transform: scale(0);
+    }
+    .blob.b1 { width: 50px; height: 50px; background: #0071e3; left: 10px; top: 12px; }
+    .blob.b2 { width: 42px; height: 42px; background: #ff3b88; right: 20px; top: 4px; }
+    .blob.b3 { width: 36px; height: 36px; background: #ffbb33; left: 50%; bottom: 4px; margin-left: -18px; }
+    body.show-graphic .blob {
+      opacity: 0.85;
+      transform: scale(1);
+      animation: blobFloat 3s ease-in-out infinite;
+    }
+    body.show-graphic .blob.b1 { animation-delay: 0s; }
+    body.show-graphic .blob.b2 { animation-delay: 0.4s; }
+    body.show-graphic .blob.b3 { animation-delay: 0.8s; }
+    @keyframes blobFloat {
+      0%,100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.1) translateY(-6px); }
+    }
+
+    /* MOTION LINES */
+    .v-motion {
+      width: 180px; height: 60px;
+    }
+    .v-motion svg {
+      width: 100%; height: 100%;
+      overflow: visible;
+    }
+    .v-motion path {
+      fill: none;
+      stroke: #0071e3;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 8 12;
+    }
+    .v-motion .p1 { stroke: #0071e3; opacity: 0.95; }
+    .v-motion .p2 { stroke: #4a9eff; opacity: 0.7; }
+    .v-motion .p3 { stroke: #80beff; opacity: 0.5; }
+    body.show-motion .v-motion path {
+      animation: motionFlow 1.2s linear infinite;
+    }
+    body.show-motion .v-motion .p2 { animation-delay: 0.15s; }
+    body.show-motion .v-motion .p3 { animation-delay: 0.3s; }
+    @keyframes motionFlow {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -40; }
+    }
+
+    /* SHOW STATES */
+    body.show-3d .v-3d,
+    body.show-graphic .v-graphic,
+    body.show-motion .v-motion {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
     /* PRELOADER */
     #preloader{
       position:fixed;inset:0;z-index:9999;
@@ -204,9 +366,33 @@
 </nav>
 
 <section id="hero">
+  <div class="hero-popup">
+    <div class="v v-3d">
+      <div class="cube">
+        <div class="face f1"></div>
+        <div class="face f2"></div>
+        <div class="face f3"></div>
+        <div class="face f4"></div>
+        <div class="face f5"></div>
+        <div class="face f6"></div>
+      </div>
+    </div>
+    <div class="v v-graphic">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+    </div>
+    <div class="v v-motion">
+      <svg viewBox="0 0 180 60" preserveAspectRatio="none">
+        <path class="p1" d="M0 30 Q 30 5, 60 30 T 120 30 T 180 30"/>
+        <path class="p2" d="M0 30 Q 30 50, 60 30 T 120 30 T 180 30"/>
+        <path class="p3" d="M0 30 Q 30 15, 60 30 T 120 30 T 180 30"/>
+      </svg>
+    </div>
+  </div>
   <p class="hero-eyebrow">Graphic Designer & Motion Artist</p>
   <h1 class="hero-title">Hi, I'm Thwvy.</h1>
-  <p class="hero-sub">I make 3D designs, graphics, and motion animations — crafting visuals that feel alive and real.</p>
+  <p class="hero-sub">I make <span class="hw hw-3d">3D designs</span>, <span class="hw hw-graphic">graphics</span>, and <span class="hw hw-motion">motion animations</span> — crafting visuals that feel alive and real.</p>
   <div class="hero-buttons">
     <a href="#work" class="btn-blue">See my work</a>
     <a href="#contact" class="btn-ghost">Let's talk</a>
@@ -312,6 +498,32 @@
     setTimeout(function() {
       document.getElementById('preloader').classList.add('done');
     }, 600);
+  });
+
+  // Split motion-text into letter spans + stagger the animation delay
+  document.querySelectorAll('.hw-motion').forEach(el => {
+    const text = el.textContent;
+    el.innerHTML = '';
+    [...text].forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.className = 'l';
+      s.textContent = ch === ' ' ? '\u00A0' : ch;
+      s.style.animationDelay = (i * 0.04) + 's';
+      el.appendChild(s);
+    });
+  });
+
+  // Hover word → show popup visual
+  const hoverMap = [
+    { sel: '.hw-3d', cls: 'show-3d' },
+    { sel: '.hw-graphic', cls: 'show-graphic' },
+    { sel: '.hw-motion', cls: 'show-motion' }
+  ];
+  hoverMap.forEach(m => {
+    document.querySelectorAll(m.sel).forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add(m.cls));
+      el.addEventListener('mouseleave', () => document.body.classList.remove(m.cls));
+    });
   });
 
   // Scroll reveal
