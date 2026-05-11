@@ -8,8 +8,65 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; overflow-y: auto; }
+    .modal.active { display: block; }
+    .modal-content { max-width: 900px; margin: 0 auto; padding: 60px 48px 80px; animation: slideUp 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-close { position: fixed; top: 20px; right: 20px; width: 48px; height: 48px; background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #f5f5f7; font-size: 24px; cursor: pointer; z-index: 1001; }
+    .modal-close:hover { background: rgba(255,255,255,0.1); }
+    .modal-header { margin-bottom: 40px; }
+    .modal-title { font-size: 48px; font-weight: 700; margin-bottom: 16px; line-height: 1.1; }
+    .modal-eyebrow { font-size: 13px; font-weight: 500; color: #0071e3; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal-overview { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.7); margin: 40px 0; }
+    .section-title { font-size: 16px; font-weight: 600; margin: 40px 0 20px; color: #f5f5f7; }
+    .process-steps { display: grid; gap: 32px; margin: 40px 0; }
+    .process-step { border-left: 2px solid #0071e3; padding-left: 24px; }
+    .step-number { font-size: 48px; font-weight: 700; color: rgba(0,113,227,0.2); margin-bottom: -12px; }
+    .step-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .step-description { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.6); }
+    .tools-list { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+    .tool-tag { display: inline-block; padding: 8px 16px; background: rgba(0,113,227,0.1); border: 1px solid #0071e3; border-radius: 6px; font-size: 13px; font-weight: 500; color: #0071e3; }
+    .project-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 40px 0; }
+    .project-image-card { border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,113,227,0.2); transition: all 0.3s ease; }
+    .project-image-card:hover { border-color: #0071e3; background: rgba(0,113,227,0.1); }
+    .project-image { width: 100%; height: 300px; object-fit: cover; }
+    .image-info { padding: 16px; }
+    .image-concept { font-size: 12px; font-weight: 600; color: #0071e3; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; }
+    .image-details { font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.6); }
+    @media (max-width: 768px) { 
+      .modal-content { padding: 40px 20px 60px; } 
+      .modal-title { font-size: 32px; }
+      .process-step { padding-left: 16px; }
+      .step-number { font-size: 36px; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-eyebrow" id="modalEyebrow">Campaign</p>
+        <h1 class="modal-title" id="modalTitle">Project Name</h1>
+      </div>
+      <p class="modal-overview" id="modalOverview">Project overview...</p>
+      <div>
+        <h3 class="section-title">Tools & Software</h3>
+        <div class="tools-list" id="toolsList"></div>
+      </div>
+      <div>
+        <h3 class="section-title">Design Process</h3>
+        <div class="process-steps" id="processList"></div>
+      </div>
+      <div>
+        <h3 class="section-title">Project Details</h3>
+        <div class="project-images" id="projectImagesList"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -32,46 +89,225 @@
 
   <!-- GRID -->
   <section class="grid-wrap">
-    <div class="grid" id="grid"></div>
+    <div class="grid">
+      <a href="#" class="card fade-in" onclick="openProject(0)">
+        <div class="thumb">
+          <span class="tag">Campaign</span>
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Samsung Galaxy" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <h3>Samsung Galaxy</h3>
+          <span>2024</span>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(1)">
+        <div class="thumb">
+          <span class="tag">Product</span>
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Gaming Products" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <h3>Gaming Products</h3>
+          <span>2024</span>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(2)">
+        <div class="thumb">
+          <span class="tag">Campaign</span>
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Toys Campaign" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <h3>Toys Campaign</h3>
+          <span>2024</span>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(3)">
+        <div class="thumb">
+          <span class="tag">Product</span>
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Blind Box" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <h3>Blind Box Collection</h3>
+          <span>2024</span>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(4)">
+        <div class="thumb">
+          <span class="tag">Campaign</span>
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Sale Campaign" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <h3>Summer Sale</h3>
+          <span>2024</span>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(5)">
+        <div class="thumb">
+          <span class="tag">Product</span>
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Sony Audio" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <h3>Sony Audio</h3>
+          <span>2024</span>
+        </div>
+      </a>
+    </div>
   </section>
 
   <footer>© 2024 Thwvy — All rights reserved.</footer>
 
-  <script src="project-detail.html"></script>
   <script>
-    const pageType = 'graphic';
-    
-    fetch('projects.json')
-      .then(res => res.json())
-      .then(data => {
-        const grid = document.getElementById('grid');
-        const projects = data[pageType];
-        
-        projects.forEach((project, index) => {
-          const card = document.createElement('a');
-          card.href = '#';
-          card.className = 'card fade-in';
-          card.style.animationDelay = (index * 0.05) + 's';
-          card.onclick = (e) => {
-            e.preventDefault();
-            openProjectDetail(project.id, pageType);
-          };
-          
-          card.innerHTML = `
-            <div class="thumb">
-              <span class="tag">${project.category}</span>
-              <img src="${project.image}" alt="${project.title}" style="width:100%; height:100%; object-fit:cover;">
-            </div>
-            <div class="meta">
-              <h3>${project.title}</h3>
-              <span>${new Date().getFullYear()}</span>
-            </div>
-          `;
-          
-          grid.appendChild(card);
-        });
-      })
-      .catch(err => console.error('Error loading projects:', err));
+    const projects = [
+      {
+        title: "Samsung Galaxy Campaign",
+        category: "Campaign",
+        overview: "A sleek and modern campaign design for Samsung Galaxy S25 Edge featuring premium product photography and bold typography highlighting the latest innovation.",
+        tools: ["Adobe Photoshop", "Figma", "Illustrator"],
+        process: [
+          { step: 1, title: "Product Research", description: "Analyzed Samsung Galaxy specifications and target audience. Created mood boards with premium aesthetic and modern design language." },
+          { step: 2, title: "Layout Design", description: "Designed campaign layout with focus on product prominence. Used clean typography and white space for sophisticated look." },
+          { step: 3, title: "Final Production", description: "Optimized for digital and print. Applied color grading and ensured all elements align with Samsung branding guidelines." }
+        ],
+        images: [
+          { concept: "Product Showcase", details: "Professional product photography combined with Galaxy branding. Used minimalist white background for premium feel." },
+          { concept: "Campaign Composition", details: "Arranged product, text, and graphics using golden ratio principles. Hierarchy designed for maximum impact." },
+          { concept: "Social Media", details: "Optimized design for Instagram and web formats. Maintained brand consistency across all platforms." }
+        ]
+      },
+      {
+        title: "Gaming Products Campaign",
+        category: "Product",
+        overview: "A vibrant Father's Day tech sale campaign featuring gaming peripherals, smartwatches, and accessories with bold typography and striking color palette.",
+        tools: ["Adobe Creative Suite", "Figma"],
+        process: [
+          { step: 1, title: "Theme Development", description: "Created Father's Day tech theme with playful yet professional aesthetic. Researched gaming product trends and tech enthusiast preferences." },
+          { step: 2, title: "Visual Composition", description: "Arranged products in dynamic grid layout. Used blue color palette to convey tech and gaming appeal." },
+          { step: 3, title: "Campaign Roll-Out", description: "Designed for multiple channels - email, social media, and web. Ensured consistent messaging across all touchpoints." }
+        ],
+        images: [
+          { concept: "Product Layout", details: "Organized gaming products including watch, console, camera gimbal. Created visual balance with strategic spacing." },
+          { concept: "Typography & Color", details: "Bold blue typography for 'FATHER'S DAY TECH SALE'. Contrasting colors to highlight discount percentage." },
+          { concept: "Call-to-Action", details: "Prominent 'SHOP GIFTS' button design. Optimized for click-through and conversion on digital channels." }
+        ]
+      },
+      {
+        title: "Toys Collection Campaign",
+        category: "Campaign",
+        overview: "Cute and playful campaign for collectible toy keychains featuring vibrant colors, fun aesthetic, and engaging product presentation for young audiences.",
+        tools: ["Photoshop", "Illustrator", "Figma"],
+        process: [
+          { step: 1, title: "Character Styling", description: "Showcased cute toy characters in appealing poses. Maintained consistent lighting and background aesthetic throughout." },
+          { step: 2, title: "Campaign Design", description: "Created playful tagline layout 'Cheer Up, Baby!' with rainbow design elements. Used bright turquoise background for energy." },
+          { step: 3, title: "Promotional Materials", description: "Designed product display cards and promotional graphics. Included call-to-action for product purchase and free delivery messaging." }
+        ],
+        images: [
+          { concept: "Character Showcase", details: "Three cute monster keychains displayed on colored rod. Professional product photography with clean composition." },
+          { concept: "Branding & Messaging", details: "Added 'Cheer Up, Baby!' tagline with rainbow graphic. Integrated brand colors and playful typography." },
+          { concept: "Promotional Copy", details: "Included 'FREE NEXT-DAY DELIVERY' messaging. Optimized for e-commerce conversion and social sharing." }
+        ]
+      },
+      {
+        title: "Blind Box Collection",
+        category: "Product",
+        overview: "Limited edition blind box collection featuring adorable collectible toys with seasonal themes, exclusive designs, and premium packaging aesthetics.",
+        tools: ["Adobe Photoshop", "InDesign"],
+        process: [
+          { step: 1, title: "Collection Planning", description: "Designed three distinct toy characters with different personalities. Created packaging concept for blind box collection." },
+          { step: 2, title: "Visual Identity", description: "Developed cohesive color palette and styling for character collection. Ensured visual harmony across all products." },
+          { step: 3, title: "Campaign Execution", description: "Created promotional materials and product display designs. Designed marketing assets for launch campaign." }
+        ],
+        images: [
+          { concept: "Character Design", details: "Three unique character designs with distinct personalities. Each character crafted with cute aesthetic and high-quality production." },
+          { concept: "Product Photography", details: "Professional photo shoot setup with turquoise background. Showcased product details and collectible appeal." },
+          { concept: "Promotional Design", details: "Added 'CHEER UP, BABY!' branding and partnership logos. Included call-to-action for online shopping." }
+        ]
+      },
+      {
+        title: "Summer Skincare Sale",
+        category: "Campaign",
+        overview: "Bold 50% off sitewide promotion for summer skincare products featuring lifestyle photography and various beauty care products with vibrant color scheme.",
+        tools: ["Photoshop", "Illustrator"],
+        process: [
+          { step: 1, title: "Campaign Strategy", description: "Planned summer skincare promotion with emphasis on discounts and product variety. Created mood board for fresh, healthy aesthetic." },
+          { step: 2, title: "Visual Design", description: "Featured model with skincare products arranged around her. Used bright yellow text for visibility and impact." },
+          { step: 3, title: "Promotional Execution", description: "Created web and social media assets. Optimized product shots and messaging for conversion." }
+        ],
+        images: [
+          { concept: "Model & Product", details: "Young woman with skincare products arranged around her. Blue and yellow color palette for summer vibes." },
+          { concept: "Typography Treatment", details: "Large bold '50% OFF' in yellow with 'SITEWIDE' text. Clear hierarchy for discount messaging." },
+          { concept: "Product Display", details: "Showcased multiple skincare brands - moisturizers, serums, sunscreen. Organized for easy scanning." }
+        ]
+      },
+      {
+        title: "Sony Audio Campaign",
+        category: "Product",
+        overview: "Premium audio product campaign for Sony headphones highlighting noise cancellation technology, professional audio quality, and sleek modern design aesthetics.",
+        tools: ["Photoshop", "Figma"],
+        process: [
+          { step: 1, title: "Product Photography", description: "Captured Sony headphones from multiple angles. Emphasized premium build quality and design details." },
+          { step: 2, title: "Layout Design", description: "Arranged headphone images for product showcase. Created minimalist design highlighting audio quality." },
+          { step: 3, title: "Campaign Finalization", description: "Added brand partnership logos and call-to-action. Optimized for all digital platforms and print materials." }
+        ],
+        images: [
+          { concept: "Product Showcase", details: "Sony headphones displayed against clean background. Professional photography emphasizing design and quality." },
+          { concept: "Multi-angle Views", details: "Left ear cup shown from different angles. Top and side views showcase size and comfort features." },
+          { concept: "Brand Integration", details: "Sony and Letstango partnership logos integrated. Added 'SHOP NOW' call-to-action and availability messaging." }
+        ]
+      }
+    ];
+
+    function openProject(index) {
+      event.preventDefault();
+      const project = projects[index];
+      
+      document.getElementById('modalTitle').textContent = project.title;
+      document.getElementById('modalEyebrow').textContent = project.category;
+      document.getElementById('modalOverview').textContent = project.overview;
+      
+      const toolsList = document.getElementById('toolsList');
+      toolsList.innerHTML = project.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('');
+      
+      const processList = document.getElementById('processList');
+      processList.innerHTML = project.process.map(p => `
+        <div class="process-step">
+          <div class="step-number">${p.step}</div>
+          <h3 class="step-title">${p.title}</h3>
+          <p class="step-description">${p.description}</p>
+        </div>
+      `).join('');
+      
+      const imagesList = document.getElementById('projectImagesList');
+      imagesList.innerHTML = project.images.map(img => `
+        <div class="project-image-card">
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="${img.concept}" class="project-image">
+          <div class="image-info">
+            <div class="image-concept">${img.concept}</div>
+            <div class="image-details">${img.details}</div>
+          </div>
+        </div>
+      `).join('');
+      
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
   </script>
+
 </body>
 </html>
