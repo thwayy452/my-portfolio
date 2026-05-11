@@ -32,118 +32,46 @@
 
   <!-- GRID -->
   <section class="grid-wrap">
-    <div class="grid">
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Poster</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#ff5e3a"/>
-                <stop offset="100%" stop-color="#ff2a68"/>
-              </linearGradient>
-            </defs>
-            <rect width="400" height="400" fill="#0d0d0d"/>
-            <circle cx="200" cy="200" r="120" fill="url(#g1)"/>
-            <text x="200" y="212" font-family="Inter, sans-serif" font-size="48" fill="#fff" text-anchor="middle" font-weight="700">echo</text>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Echo Festival</h3>
-          <span>2024</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Branding</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#f4f1ea"/>
-            <rect x="50" y="100" width="120" height="200" fill="#1a1a1a"/>
-            <rect x="180" y="150" width="170" height="150" fill="#c2410c"/>
-            <text x="60" y="360" font-family="Inter, sans-serif" font-size="14" fill="#1a1a1a" letter-spacing="3" font-weight="500">MORI / IDENTITY</text>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Mori Studio</h3>
-          <span>2024</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Editorial</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#0d0d0d"/>
-            <text x="200" y="180" font-family="Inter, sans-serif" font-size="90" fill="#f5f5f7" text-anchor="middle" font-weight="700">No.12</text>
-            <line x1="60" y1="220" x2="340" y2="220" stroke="#f5f5f7" stroke-width="1"/>
-            <text x="200" y="260" font-family="Inter, sans-serif" font-size="11" fill="#8a8a8a" text-anchor="middle" letter-spacing="4" font-weight="500">QUARTERLY — SPRING ISSUE</text>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Issue No. 12</h3>
-          <span>2024</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Campaign</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#0ea5e9"/>
-                <stop offset="100%" stop-color="#1e3a8a"/>
-              </linearGradient>
-            </defs>
-            <rect width="400" height="400" fill="url(#g4)"/>
-            <circle cx="120" cy="140" r="50" fill="none" stroke="#fff" stroke-width="2"/>
-            <circle cx="120" cy="140" r="90" fill="none" stroke="#fff" stroke-width="1" opacity="0.6"/>
-            <text x="200" y="360" font-family="Inter, sans-serif" font-size="22" fill="#fff" font-weight="700">drift / 2024</text>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Drift Campaign</h3>
-          <span>2024</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Type</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#e8e3d8"/>
-            <text x="200" y="270" font-family="Inter, sans-serif" font-size="220" fill="#1a1a1a" text-anchor="middle" font-weight="700">A</text>
-            <text x="200" y="340" font-family="Inter, sans-serif" font-size="10" fill="#1a1a1a" text-anchor="middle" letter-spacing="5" font-weight="500">SPECIMEN — 01</text>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Type Specimen</h3>
-          <span>2023</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Album</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#1a0a2e"/>
-            <circle cx="200" cy="200" r="110" fill="#3a0ca3"/>
-            <circle cx="200" cy="200" r="28" fill="#f72585"/>
-            <text x="200" y="370" font-family="Inter, sans-serif" font-size="11" fill="#fff" text-anchor="middle" letter-spacing="4" font-weight="500">NOCTURNE — LP</text>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Nocturne LP</h3>
-          <span>2023</span>
-        </div>
-      </a>
-
-    </div>
+    <div class="grid" id="grid"></div>
   </section>
 
   <footer>© 2024 Thwvy — All rights reserved.</footer>
 
+  <script src="project-detail.html"></script>
+  <script>
+    const pageType = 'graphic';
+    
+    fetch('projects.json')
+      .then(res => res.json())
+      .then(data => {
+        const grid = document.getElementById('grid');
+        const projects = data[pageType];
+        
+        projects.forEach((project, index) => {
+          const card = document.createElement('a');
+          card.href = '#';
+          card.className = 'card fade-in';
+          card.style.animationDelay = (index * 0.05) + 's';
+          card.onclick = (e) => {
+            e.preventDefault();
+            openProjectDetail(project.id, pageType);
+          };
+          
+          card.innerHTML = `
+            <div class="thumb">
+              <span class="tag">${project.category}</span>
+              <img src="${project.image}" alt="${project.title}" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="meta">
+              <h3>${project.title}</h3>
+              <span>${new Date().getFullYear()}</span>
+            </div>
+          `;
+          
+          grid.appendChild(card);
+        });
+      })
+      .catch(err => console.error('Error loading projects:', err));
+  </script>
 </body>
 </html>
