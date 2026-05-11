@@ -26,9 +26,21 @@
         }
       ],
       "projectImages": [
-        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80",
-        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80",
-        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80"
+        {
+          "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+          "concept": "Initial concept exploration",
+          "details": "Explored bold typography combined with vibrant festival colors. Focus on creating eye-catching visuals that stand out in crowded spaces."
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+          "concept": "Color palette development",
+          "details": "Created a vibrant color system using complementary hues. Each color represents different music genres and performance styles at the festival."
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+          "concept": "Final design composition",
+          "details": "Combined typography, imagery, and color into a cohesive poster design. Optimized for both digital and print applications with proper resolution and color profiles."
+        }
       ]
     },
     {
