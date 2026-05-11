@@ -48,119 +48,46 @@
   </header>
 
   <section class="grid-wrap">
-    <div class="grid">
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Loop</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#0d0d0d"/>
-            <circle cx="200" cy="200" r="80" fill="none" stroke="#0071e3" stroke-width="3"/>
-            <circle class="anim-spin" cx="200" cy="200" r="80" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="30 470" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Spin Cycle</h3>
-          <span>After Effects</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Logo</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#1e1b4b"/>
-            <g class="anim-bob">
-              <rect x="150" y="150" width="100" height="100" fill="#a5b4fc" rx="8"/>
-              <rect x="175" y="175" width="50" height="50" fill="#1e1b4b" rx="4"/>
-            </g>
-            <text x="200" y="330" font-family="Inter, sans-serif" font-size="11" fill="#a5b4fc" text-anchor="middle" letter-spacing="4" font-weight="500">RISE / LOGO ANIM</text>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Rise — Logo</h3>
-          <span>After Effects</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Kinetic</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#fef3c7"/>
-            <g class="anim-drift">
-              <text x="200" y="230" font-family="Inter, sans-serif" font-size="80" fill="#1a1a1a" text-anchor="middle" font-weight="700">flow</text>
-            </g>
-            <line x1="60" y1="270" x2="340" y2="270" stroke="#1a1a1a" stroke-width="1"/>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Flow / Type</h3>
-          <span>Kinetic</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Transition</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <linearGradient id="ag4" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#0071e3"/>
-                <stop offset="100%" stop-color="#1e3a8a"/>
-              </linearGradient>
-            </defs>
-            <rect width="400" height="400" fill="url(#ag4)"/>
-            <circle class="anim-pulse" cx="200" cy="200" r="60" fill="#fff" opacity="0.9"/>
-            <circle cx="200" cy="200" r="100" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
-            <circle cx="200" cy="200" r="140" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Pulse</h3>
-          <span>Loop</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Short</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#0d0d0d"/>
-            <g class="anim-bob">
-              <polygon points="200,120 250,220 200,200 150,220" fill="#f59e0b"/>
-            </g>
-            <text x="200" y="320" font-family="Inter, sans-serif" font-size="22" fill="#f5f5f7" text-anchor="middle" font-weight="700">— ember</text>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Ember</h3>
-          <span>Short Film</span>
-        </div>
-      </a>
-
-      <a href="#" class="card fade-in">
-        <div class="thumb">
-          <span class="tag">Loop</span>
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#022c22"/>
-            <g class="anim-spin">
-              <rect x="190" y="100" width="20" height="200" fill="#10b981"/>
-              <rect x="100" y="190" width="200" height="20" fill="#10b981"/>
-            </g>
-            <circle cx="200" cy="200" r="14" fill="#fff"/>
-          </svg>
-        </div>
-        <div class="meta">
-          <h3>Plus Loop</h3>
-          <span>Loop</span>
-        </div>
-      </a>
-
-    </div>
+    <div class="grid" id="grid"></div>
   </section>
 
   <footer>© 2024 Thwvy — All rights reserved.</footer>
 
+  <script src="project-detail.html"></script>
+  <script>
+    const pageType = 'animation';
+    
+    fetch('projects.json')
+      .then(res => res.json())
+      .then(data => {
+        const grid = document.getElementById('grid');
+        const projects = data[pageType];
+        
+        projects.forEach((project, index) => {
+          const card = document.createElement('a');
+          card.href = '#';
+          card.className = 'card fade-in';
+          card.style.animationDelay = (index * 0.05) + 's';
+          card.onclick = (e) => {
+            e.preventDefault();
+            openProjectDetail(project.id, pageType);
+          };
+          
+          card.innerHTML = `
+            <div class="thumb">
+              <span class="tag">${project.category}</span>
+              <img src="${project.image}" alt="${project.title}" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="meta">
+              <h3>${project.title}</h3>
+              <span>${new Date().getFullYear()}</span>
+            </div>
+          `;
+          
+          grid.appendChild(card);
+        });
+      })
+      .catch(err => console.error('Error loading projects:', err));
+  </script>
 </body>
 </html>
