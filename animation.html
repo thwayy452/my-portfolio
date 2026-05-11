@@ -6,10 +6,9 @@
   <title>Animation — Thwvy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Animation-specific motion on thumbnails */
     @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes drift {
       0%, 100% { transform: translateX(0); }
@@ -31,9 +30,8 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav">
-    <a href="index.html" class="brand">Thwvy.</a>
+  <nav>
+    <a href="index.html" class="nav-logo">Thwvy<span class="dot">.</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="graphic.html">Graphic</a></li>
@@ -41,28 +39,25 @@
       <li><a href="animation.html" class="active">Animation</a></li>
       <li><a href="index.html#about">About</a></li>
     </ul>
-    <a href="index.html#contact" class="cta">Get in touch ↗</a>
+    <a href="index.html#contact" class="nav-cta">Get in touch ↗</a>
   </nav>
 
-  <!-- HEADER -->
   <header class="page-header">
-    <p class="eyebrow">03 — Selected Work</p>
-    <h1 class="page-title">Motion <em>animation.</em></h1>
+    <p class="eyebrow">Selected Work</p>
+    <h1 class="page-title">Motion animation<span class="dot">.</span></h1>
     <p class="page-lead">Loops, transitions, and short-form motion pieces — built with After Effects and rendered to feel alive.</p>
   </header>
 
-  <!-- GRID -->
   <section class="grid-wrap">
     <div class="grid">
 
-      <!-- 1 -->
       <a href="#" class="card fade-in">
         <div class="thumb">
           <span class="tag">Loop</span>
-          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="300" fill="#0d0d0d"/>
-            <circle cx="200" cy="150" r="60" fill="none" stroke="#f97316" stroke-width="3"/>
-            <circle class="anim-spin" cx="200" cy="150" r="60" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="20 350" stroke-linecap="round"/>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#0d0d0d"/>
+            <circle cx="200" cy="200" r="80" fill="none" stroke="#0071e3" stroke-width="3"/>
+            <circle class="anim-spin" cx="200" cy="200" r="80" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="30 470" stroke-linecap="round"/>
           </svg>
         </div>
         <div class="meta">
@@ -71,17 +66,16 @@
         </div>
       </a>
 
-      <!-- 2 -->
       <a href="#" class="card fade-in">
         <div class="thumb">
           <span class="tag">Logo</span>
-          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="300" fill="#1e1b4b"/>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#1e1b4b"/>
             <g class="anim-bob">
-              <rect x="160" y="110" width="80" height="80" fill="#a5b4fc" rx="6"/>
-              <rect x="180" y="130" width="40" height="40" fill="#1e1b4b" rx="3"/>
+              <rect x="150" y="150" width="100" height="100" fill="#a5b4fc" rx="8"/>
+              <rect x="175" y="175" width="50" height="50" fill="#1e1b4b" rx="4"/>
             </g>
-            <text x="200" y="240" font-family="Inter, sans-serif" font-size="10" fill="#a5b4fc" text-anchor="middle" letter-spacing="4">RISE / LOGO ANIM</text>
+            <text x="200" y="330" font-family="Inter, sans-serif" font-size="11" fill="#a5b4fc" text-anchor="middle" letter-spacing="4" font-weight="500">RISE / LOGO ANIM</text>
           </svg>
         </div>
         <div class="meta">
@@ -90,16 +84,15 @@
         </div>
       </a>
 
-      <!-- 3 -->
       <a href="#" class="card fade-in">
         <div class="thumb">
           <span class="tag">Kinetic</span>
-          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="300" fill="#fef3c7"/>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#fef3c7"/>
             <g class="anim-drift">
-              <text x="200" y="170" font-family="Fraunces, serif" font-size="56" fill="#1a1a1a" text-anchor="middle" font-style="italic">flow</text>
+              <text x="200" y="230" font-family="Inter, sans-serif" font-size="80" fill="#1a1a1a" text-anchor="middle" font-weight="700">flow</text>
             </g>
-            <line x1="60" y1="200" x2="340" y2="200" stroke="#1a1a1a" stroke-width="1"/>
+            <line x1="60" y1="270" x2="340" y2="270" stroke="#1a1a1a" stroke-width="1"/>
           </svg>
         </div>
         <div class="meta">
@@ -108,21 +101,20 @@
         </div>
       </a>
 
-      <!-- 4 -->
       <a href="#" class="card fade-in">
         <div class="thumb">
           <span class="tag">Transition</span>
-          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
             <defs>
               <linearGradient id="ag4" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#ec4899"/>
-                <stop offset="100%" stop-color="#8b5cf6"/>
+                <stop offset="0%" stop-color="#0071e3"/>
+                <stop offset="100%" stop-color="#1e3a8a"/>
               </linearGradient>
             </defs>
-            <rect width="400" height="300" fill="url(#ag4)"/>
-            <circle class="anim-pulse" cx="200" cy="150" r="50" fill="#fff" opacity="0.9"/>
-            <circle cx="200" cy="150" r="80" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
-            <circle cx="200" cy="150" r="110" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>
+            <rect width="400" height="400" fill="url(#ag4)"/>
+            <circle class="anim-pulse" cx="200" cy="200" r="60" fill="#fff" opacity="0.9"/>
+            <circle cx="200" cy="200" r="100" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>
+            <circle cx="200" cy="200" r="140" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>
           </svg>
         </div>
         <div class="meta">
@@ -131,16 +123,15 @@
         </div>
       </a>
 
-      <!-- 5 -->
       <a href="#" class="card fade-in">
         <div class="thumb">
           <span class="tag">Short</span>
-          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="300" fill="#0d0d0d"/>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#0d0d0d"/>
             <g class="anim-bob">
-              <polygon points="200,90 240,170 200,150 160,170" fill="#f59e0b"/>
+              <polygon points="200,120 250,220 200,200 150,220" fill="#f59e0b"/>
             </g>
-            <text x="200" y="240" font-family="Fraunces, serif" font-size="18" fill="#f5f5f5" text-anchor="middle" font-style="italic">— ember</text>
+            <text x="200" y="320" font-family="Inter, sans-serif" font-size="22" fill="#f5f5f7" text-anchor="middle" font-weight="700">— ember</text>
           </svg>
         </div>
         <div class="meta">
@@ -149,17 +140,16 @@
         </div>
       </a>
 
-      <!-- 6 -->
       <a href="#" class="card fade-in">
         <div class="thumb">
           <span class="tag">Loop</span>
-          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="300" fill="#022c22"/>
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#022c22"/>
             <g class="anim-spin">
-              <rect x="190" y="80" width="20" height="140" fill="#10b981"/>
-              <rect x="130" y="140" width="140" height="20" fill="#10b981"/>
+              <rect x="190" y="100" width="20" height="200" fill="#10b981"/>
+              <rect x="100" y="190" width="200" height="20" fill="#10b981"/>
             </g>
-            <circle cx="200" cy="150" r="12" fill="#fff"/>
+            <circle cx="200" cy="200" r="14" fill="#fff"/>
           </svg>
         </div>
         <div class="meta">
