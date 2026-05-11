@@ -124,35 +124,44 @@ nav {
 @media (max-width: 640px) {
   nav { 
     padding: 0 16px; 
-    height: 60px;
-    flex-wrap: wrap;
+    height: 56px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
   .nav-logo { 
-    font-size: 15px; 
+    font-size: 15px;
+    white-space: nowrap;
   }
   .nav-links { 
-    gap: 16px; 
-    font-size: 12px;
+    gap: 14px; 
+    font-size: 11px;
+  }
+  .nav-links li {
+    white-space: nowrap;
   }
   .nav-cta { 
-    font-size: 12px; 
+    font-size: 11px;
+    white-space: nowrap;
   }
   .page-header {
-    padding: 100px 20px 30px;
+    padding: 90px 18px 35px;
   }
   .eyebrow {
-    font-size: 12px;
+    font-size: 11px;
+    margin-bottom: 10px;
   }
   .page-title {
-    font-size: clamp(28px, 5vw, 48px);
-    margin-bottom: 12px;
+    font-size: clamp(32px, 6vw, 56px);
+    margin-bottom: 14px;
+    line-height: 1.1;
   }
   .page-lead {
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 100%;
   }
   .grid-wrap { 
-    padding: 30px 16px 80px; 
+    padding: 28px 12px 70px; 
   }
   .grid { 
     grid-template-columns: repeat(2, 1fr); 
@@ -164,19 +173,40 @@ nav {
   nav { 
     padding: 0 12px;
     height: 56px;
+    justify-content: space-between;
   }
   .nav-logo { 
-    font-size: 14px; 
+    font-size: 14px;
+    white-space: nowrap;
   }
   .nav-links { 
-    gap: 12px; 
-    font-size: 11px;
+    gap: 10px; 
+    font-size: 10px;
+  }
+  .nav-links li {
+    white-space: nowrap;
+  }
+  .nav-cta { 
+    font-size: 10px;
+    white-space: nowrap;
   }
   .page-header {
-    padding: 90px 16px 24px;
+    padding: 80px 16px 28px;
+  }
+  .eyebrow {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-size: clamp(28px, 6vw, 48px);
+    margin-bottom: 10px;
+  }
+  .page-lead {
+    font-size: 13px;
+    line-height: 1.5;
   }
   .grid-wrap { 
-    padding: 24px 12px 60px; 
+    padding: 24px 10px 60px; 
   }
 }
 
