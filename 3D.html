@@ -8,9 +8,103 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .modal { 
+      display: none; 
+      position: fixed; 
+      top: 0; left: 0; 
+      width: 100%; height: 100%; 
+      background: rgba(10, 10, 10, 0.75);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      z-index: 1000; 
+      overflow-y: auto; 
+    }
+    .modal.active { display: block; }
+    .modal-content { 
+      max-width: 1200px; 
+      margin: 40px auto; 
+      padding: 48px; 
+      animation: slideUp 0.5s cubic-bezier(0.34,1.56,0.64,1);
+      background: rgba(20, 20, 22, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .modal-left { position: sticky; top: 48px; }
+    .modal-right { min-width: 0; }
+    .modal-close { 
+      position: fixed; top: 24px; right: 24px; 
+      width: 48px; height: 48px; 
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2); 
+      border-radius: 12px; 
+      color: #f5f5f7; font-size: 22px; cursor: pointer; z-index: 1001; 
+      transition: all 0.3s ease;
+    }
+    .modal-close:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
+    .modal-header { margin-bottom: 32px; }
+    .modal-title { font-size: 40px; font-weight: 700; margin-bottom: 16px; line-height: 1.1; color: #fff; }
+    .modal-eyebrow { font-size: 13px; font-weight: 600; color: #0071e3; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal-hero { width: 100%; object-fit: contain; border-radius: 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .modal-overview { font-size: 17px; line-height: 1.7; color: rgba(255, 255, 255, 0.9); margin: 0 0 32px; font-weight: 400; }
+    .section-title { font-size: 14px; font-weight: 700; margin: 32px 0 16px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+    .process-steps { display: grid; gap: 32px; margin: 16px 0; }
+    .process-step { border-left: 3px solid #0071e3; padding-left: 24px; padding-top: 4px; }
+    .step-number { font-size: 36px; font-weight: 800; color: rgba(0,113,227,0.4); line-height: 1; margin-bottom: 12px; display: block; }
+    .step-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #fff; line-height: 1.3; }
+    .step-description { font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.85); font-weight: 400; }
+    .tools-list { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+    .tool-tag { display: inline-block; padding: 8px 14px; background: rgba(0, 113, 227, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(0, 113, 227, 0.5); border-radius: 8px; font-size: 12px; font-weight: 600; color: #fff; }
+    @media (max-width: 900px) { 
+      .modal-content { padding: 32px 20px; margin: 20px 12px; max-width: calc(100% - 24px); } 
+      .modal-layout { grid-template-columns: 1fr; gap: 32px; }
+      .modal-left { position: static; }
+      .modal-title { font-size: 28px; }
+      .modal-overview { font-size: 15px; }
+      .process-step { padding-left: 20px; }
+      .step-number { font-size: 30px; margin-bottom: 10px; }
+      .step-title { font-size: 16px; }
+      .step-description { font-size: 14px; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- MODAL -->
+  <div id="modal" class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-content">
+      <div class="modal-layout">
+        <div class="modal-left">
+          <img id="modalHero" class="modal-hero" src="" alt="Project">
+        </div>
+        <div class="modal-right">
+          <div class="modal-header">
+            <p class="modal-eyebrow" id="modalEyebrow">3D</p>
+            <h1 class="modal-title" id="modalTitle">Project Name</h1>
+          </div>
+          <p class="modal-overview" id="modalOverview">Project overview...</p>
+          <div>
+            <h3 class="section-title">Tools & Software</h3>
+            <div class="tools-list" id="toolsList"></div>
+          </div>
+          <div>
+            <h3 class="section-title">Design Process</h3>
+            <div class="process-steps" id="processList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-logo">Thwvy<span class="dot">.</span></a>
     <ul class="nav-links">
@@ -22,53 +116,201 @@
     <a href="index.html#contact" class="nav-cta">Get in touch ↗</a>
   </nav>
 
+  <!-- HEADER -->
   <header class="page-header">
     <p class="eyebrow">Selected Work</p>
     <h1 class="page-title">Three dimensional<span class="dot">.</span></h1>
     <p class="page-lead">Product renders, scenes, and surface experiments — built in Blender and Cinema 4D with a focus on light, material, and quiet detail.</p>
   </header>
 
+  <!-- GRID -->
   <section class="grid-wrap">
-    <div class="grid" id="grid"></div>
+    <div class="grid">
+      <a href="#" class="card fade-in" onclick="openProject(0)">
+        <div class="thumb">
+          <span class="tag">Blender</span>
+          <img src="images/3d-1.png" alt="3D Project 1" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <div class="meta-info"><div><h3>Project Name 1</h3><span>2024</span></div></div>
+          <div class="meta-cta"><span>Explore Now</span><span class="meta-cta-arrow">›</span></div>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(1)">
+        <div class="thumb">
+          <span class="tag">Cinema 4D</span>
+          <img src="images/3d-2.png" alt="3D Project 2" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <div class="meta-info"><div><h3>Project Name 2</h3><span>2024</span></div></div>
+          <div class="meta-cta"><span>Explore Now</span><span class="meta-cta-arrow">›</span></div>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(2)">
+        <div class="thumb">
+          <span class="tag">Render</span>
+          <img src="images/3d-3.png" alt="3D Project 3" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <div class="meta-info"><div><h3>Project Name 3</h3><span>2024</span></div></div>
+          <div class="meta-cta"><span>Explore Now</span><span class="meta-cta-arrow">›</span></div>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(3)">
+        <div class="thumb">
+          <span class="tag">Product</span>
+          <img src="images/3d-4.png" alt="3D Project 4" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <div class="meta-info"><div><h3>Project Name 4</h3><span>2024</span></div></div>
+          <div class="meta-cta"><span>Explore Now</span><span class="meta-cta-arrow">›</span></div>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(4)">
+        <div class="thumb">
+          <span class="tag">Texture</span>
+          <img src="images/3d-5.png" alt="3D Project 5" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <div class="meta-info"><div><h3>Project Name 5</h3><span>2024</span></div></div>
+          <div class="meta-cta"><span>Explore Now</span><span class="meta-cta-arrow">›</span></div>
+        </div>
+      </a>
+
+      <a href="#" class="card fade-in" onclick="openProject(5)">
+        <div class="thumb">
+          <span class="tag">Scene</span>
+          <img src="images/3d-6.png" alt="3D Project 6" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="meta">
+          <div class="meta-info"><div><h3>Project Name 6</h3><span>2024</span></div></div>
+          <div class="meta-cta"><span>Explore Now</span><span class="meta-cta-arrow">›</span></div>
+        </div>
+      </a>
+    </div>
   </section>
 
   <footer>© 2024 Thwvy — All rights reserved.</footer>
 
-  <script src="project-detail.html"></script>
   <script>
-    const pageType = '3d';
-    
-    fetch('projects.json')
-      .then(res => res.json())
-      .then(data => {
-        const grid = document.getElementById('grid');
-        const projects = data[pageType];
-        
-        projects.forEach((project, index) => {
-          const card = document.createElement('a');
-          card.href = '#';
-          card.className = 'card fade-in';
-          card.style.animationDelay = (index * 0.05) + 's';
-          card.onclick = (e) => {
-            e.preventDefault();
-            openProjectDetail(project.id, pageType);
-          };
-          
-          card.innerHTML = `
-            <div class="thumb">
-              <span class="tag">${project.category}</span>
-              <img src="${project.image}" alt="${project.title}" style="width:100%; height:100%; object-fit:cover;">
-            </div>
-            <div class="meta">
-              <h3>${project.title}</h3>
-              <span>${new Date().getFullYear()}</span>
-            </div>
-          `;
-          
-          grid.appendChild(card);
-        });
-      })
-      .catch(err => console.error('Error loading projects:', err));
+    const projects = [
+      {
+        title: "Project Name 1",
+        category: "Blender",
+        image: "images/3d-1.png",
+        overview: "A detailed 3D rendering project focusing on material properties, lighting, and photorealism using Blender.",
+        tools: ["Blender", "Cycles Render"],
+        process: [
+          { step: 1, title: "Modeling", description: "Created base geometry with high-poly subdivisions for smooth surfaces and detailed forms." },
+          { step: 2, title: "Material Creation", description: "Developed realistic material shaders with proper roughness, metallic properties, and reflections." },
+          { step: 3, title: "Lighting & Rendering", description: "Set up 3-point lighting setup and rendered with Cycles for photorealistic output." }
+        ]
+      },
+      {
+        title: "Project Name 2",
+        category: "Cinema 4D",
+        image: "images/3d-2.png",
+        overview: "An architectural visualization project showcasing modern design with realistic lighting and materials in Cinema 4D.",
+        tools: ["Cinema 4D", "Octane Render"],
+        process: [
+          { step: 1, title: "3D Modeling", description: "Built detailed 3D models based on architectural plans and concept sketches." },
+          { step: 2, title: "Environment Setup", description: "Created surrounding environment with proper scale and atmospheric elements." },
+          { step: 3, title: "Final Render", description: "Applied realistic lighting and rendered final composition with attention to detail." }
+        ]
+      },
+      {
+        title: "Project Name 3",
+        category: "Render",
+        image: "images/3d-3.png",
+        overview: "An artistic exploration of 3D forms using advanced materials and rendering techniques for creative expression.",
+        tools: ["Blender", "Substance Painter"],
+        process: [
+          { step: 1, title: "Concept Development", description: "Sculpted organic shapes with attention to natural geometric patterns and forms." },
+          { step: 2, title: "Material Development", description: "Created translucent materials with proper refraction and light dispersion effects." },
+          { step: 3, title: "Final Render", description: "Rendered with volumetric lighting to showcase transparency and internal light play." }
+        ]
+      },
+      {
+        title: "Project Name 4",
+        category: "Product",
+        image: "images/3d-4.png",
+        overview: "A cinematic 3D composition combining multiple elements with dramatic lighting for product visualization.",
+        tools: ["Cinema 4D", "Octane Render"],
+        process: [
+          { step: 1, title: "Scene Composition", description: "Arranged 3D models and props to create dynamic composition with strong visual flow." },
+          { step: 2, title: "Lighting Design", description: "Implemented dramatic lighting with warm tones for cinematic feel and product emphasis." },
+          { step: 3, title: "Post-Production", description: "Enhanced final render with color grading and subtle effects in post-production." }
+        ]
+      },
+      {
+        title: "Project Name 5",
+        category: "Texture",
+        image: "images/3d-5.png",
+        overview: "Playful 3D typography exploring inflatable balloon aesthetics and fluid dynamics with custom materials.",
+        tools: ["Blender", "Geometry Nodes"],
+        process: [
+          { step: 1, title: "Type Modeling", description: "Modeled 3D typeface geometry and applied soft body simulation for inflatable effects." },
+          { step: 2, title: "Material & Shading", description: "Created glossy materials with specular highlights and proper light reflection." },
+          { step: 3, title: "Animation & Rendering", description: "Rendered multiple frames showing the type in motion and final composition." }
+        ]
+      },
+      {
+        title: "Project Name 6",
+        category: "Scene",
+        image: "images/3d-6.png",
+        overview: "A detailed study in creating realistic organic surface textures with procedural methods and shading techniques.",
+        tools: ["Blender", "Substance Painter"],
+        process: [
+          { step: 1, title: "Texture Baking", description: "Created high-poly geometry and baked textures for detail preservation in low-poly form." },
+          { step: 2, title: "Shader Network", description: "Built complex shader network combining multiple textures for realistic appearance." },
+          { step: 3, title: "Final Render", description: "Rendered with subsurface scattering to show organic light transmission and depth." }
+        ]
+      }
+    ];
+
+    function openProject(index) {
+      event.preventDefault();
+      const project = projects[index];
+      
+      document.getElementById('modalTitle').textContent = project.title;
+      document.getElementById('modalEyebrow').textContent = project.category;
+      document.getElementById('modalOverview').textContent = project.overview;
+      document.getElementById('modalHero').src = project.image;
+      document.getElementById('modalHero').alt = project.title;
+      
+      const toolsList = document.getElementById('toolsList');
+      toolsList.innerHTML = project.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('');
+      
+      const processList = document.getElementById('processList');
+      processList.innerHTML = project.process.map(p => `
+        <div class="process-step">
+          <span class="step-number">${p.step}</span>
+          <h3 class="step-title">${p.title}</h3>
+          <p class="step-description">${p.description}</p>
+        </div>
+      `).join('');
+      
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
   </script>
+
 </body>
 </html>
