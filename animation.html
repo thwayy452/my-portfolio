@@ -10,20 +10,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* YouTube iframe in cards */
-    .thumb iframe {
-      width: 100%;
-      height: 100%;
+    /* Card video container — masks YouTube branding */
+    .thumb {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    
+    .video-frame {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200%; /* Zoom in to hide branding edges */
+      height: 200%;
       border: none;
       pointer-events: none;
     }
     
-    /* Click capture overlay so card click works */
+    /* Click overlay catches clicks on whole card */
     .thumb-overlay {
       position: absolute;
       inset: 0;
-      z-index: 1;
+      z-index: 5;
       cursor: pointer;
+      background: transparent;
+    }
+    
+    /* Black overlay for cards to hide remaining YouTube UI */
+    .video-mask {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      /* Optional subtle gradient overlay */
+      background: linear-gradient(to bottom, transparent 70%, rgba(0,0,0,0.3) 100%);
     }
     
     /* Modal styles */
@@ -71,8 +92,9 @@
     .modal-title { font-size: 40px; font-weight: 700; margin-bottom: 16px; line-height: 1.1; color: #fff; }
     .modal-eyebrow { font-size: 13px; font-weight: 600; color: #0071e3; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
     
-    /* Reel-style YouTube iframe in modal */
+    /* Modal video — vertical 9:16 with clean overlay */
     .modal-video-wrap {
+      position: relative;
       width: 100%;
       aspect-ratio: 9/16;
       max-width: 380px;
@@ -83,10 +105,47 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       overflow: hidden;
     }
+    
     .modal-video-wrap iframe {
-      width: 100%;
-      height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200%;
+      height: 200%;
       border: none;
+      pointer-events: none;
+    }
+    
+    /* Custom mute button overlay */
+    .mute-btn {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      width: 44px;
+      height: 44px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+    
+    .mute-btn:hover {
+      background: rgba(0, 113, 227, 0.6);
+      transform: scale(1.05);
+    }
+    
+    .mute-btn svg {
+      width: 20px;
+      height: 20px;
     }
     
     .modal-overview { font-size: 17px; line-height: 1.7; color: rgba(255, 255, 255, 0.9); margin: 0 0 32px; font-weight: 400; }
@@ -121,13 +180,12 @@
       <div class="modal-layout">
         <div class="modal-left">
           <div class="modal-video-wrap">
-            <iframe 
-              id="modalVideo"
-              src=""
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
+            <iframe id="modalVideo" src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+            <button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Unmute">
+              <svg viewBox="0 0 24 24" fill="currentColor" id="muteIcon">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+              </svg>
+            </button>
           </div>
         </div>
         <div class="modal-right">
@@ -174,7 +232,8 @@
       <a href="#" class="card fade-in" onclick="openProject(0)">
         <div class="thumb">
           <span class="tag">Reel</span>
-          <iframe src="https://www.youtube.com/embed/-P9li5A7ta4?autoplay=1&mute=1&loop=1&playlist=-P9li5A7ta4&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media"></iframe>
+          <iframe class="video-frame" src="https://www.youtube-nocookie.com/embed/-P9li5A7ta4?autoplay=1&mute=1&loop=1&playlist=-P9li5A7ta4&controls=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&showinfo=0&cc_load_policy=0" allow="autoplay"></iframe>
+          <div class="video-mask"></div>
           <div class="thumb-overlay"></div>
         </div>
         <div class="meta">
@@ -186,7 +245,8 @@
       <a href="#" class="card fade-in" onclick="openProject(1)">
         <div class="thumb">
           <span class="tag">Reel</span>
-          <iframe src="https://www.youtube.com/embed/_sHkbMCrQV4?autoplay=1&mute=1&loop=1&playlist=_sHkbMCrQV4&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media"></iframe>
+          <iframe class="video-frame" src="https://www.youtube-nocookie.com/embed/_sHkbMCrQV4?autoplay=1&mute=1&loop=1&playlist=_sHkbMCrQV4&controls=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&showinfo=0&cc_load_policy=0" allow="autoplay"></iframe>
+          <div class="video-mask"></div>
           <div class="thumb-overlay"></div>
         </div>
         <div class="meta">
@@ -198,7 +258,8 @@
       <a href="#" class="card fade-in" onclick="openProject(2)">
         <div class="thumb">
           <span class="tag">Reel</span>
-          <iframe src="https://www.youtube.com/embed/KZBd9szRrfY?autoplay=1&mute=1&loop=1&playlist=KZBd9szRrfY&controls=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media"></iframe>
+          <iframe class="video-frame" src="https://www.youtube-nocookie.com/embed/KZBd9szRrfY?autoplay=1&mute=1&loop=1&playlist=KZBd9szRrfY&controls=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&showinfo=0&cc_load_policy=0" allow="autoplay"></iframe>
+          <div class="video-mask"></div>
           <div class="thumb-overlay"></div>
         </div>
         <div class="meta">
@@ -251,6 +312,8 @@
       }
     ];
 
+    let isMuted = true;
+
     function openProject(index) {
       event.preventDefault();
       const project = projects[index];
@@ -260,7 +323,9 @@
       document.getElementById('modalOverview').textContent = project.overview;
       
       const video = document.getElementById('modalVideo');
-      video.src = `https://www.youtube.com/embed/${project.videoId}?autoplay=1&mute=1&loop=1&playlist=${project.videoId}&playsinline=1`;
+      isMuted = true; // Reset to muted when opening new video
+      updateMuteIcon();
+      video.src = `https://www.youtube-nocookie.com/embed/${project.videoId}?autoplay=1&mute=1&loop=1&playlist=${project.videoId}&controls=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&showinfo=0&cc_load_policy=0&enablejsapi=1`;
       
       const toolsList = document.getElementById('toolsList');
       toolsList.innerHTML = project.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('');
@@ -278,9 +343,39 @@
       document.body.style.overflow = 'hidden';
     }
 
+    function toggleMute() {
+      const video = document.getElementById('modalVideo');
+      const command = isMuted ? 'unMute' : 'mute';
+      
+      video.contentWindow.postMessage(JSON.stringify({
+        event: 'command',
+        func: command,
+        args: ''
+      }), '*');
+      
+      isMuted = !isMuted;
+      updateMuteIcon();
+    }
+
+    function updateMuteIcon() {
+      const icon = document.getElementById('muteIcon');
+      const btn = document.getElementById('muteBtn');
+      if (isMuted) {
+        // Muted icon (speaker with X)
+        icon.innerHTML = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+        btn.title = 'Unmute';
+      } else {
+        // Unmuted icon (speaker)
+        icon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+        btn.title = 'Mute';
+      }
+    }
+
     function closeModal() {
       const video = document.getElementById('modalVideo');
       video.src = '';
+      isMuted = true;
+      updateMuteIcon();
       document.getElementById('modal').classList.remove('active');
       document.body.style.overflow = 'auto';
     }
