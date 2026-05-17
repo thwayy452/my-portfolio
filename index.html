@@ -63,65 +63,31 @@
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      opacity: 0.55;
+      opacity: 0.5;
       transition: opacity 0.3s ease, transform 0.3s ease;
-      filter: grayscale(100%);
     }
     .brand-item:hover {
       opacity: 1;
-      filter: grayscale(0%);
       transform: translateY(-2px);
     }
-    .brand-text {
-      font-size: 22px;
-      font-weight: 700;
-      color: #f5f5f7;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      white-space: nowrap;
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
     }
-    .brand-text sup {
-      font-size: 11px;
-      vertical-align: super;
-      margin-left: 2px;
-      letter-spacing: 0;
-    }
-    .brand-text.brand-serif {
-      font-family: 'Times New Roman', Times, serif;
-      letter-spacing: 2px;
-    }
-    .brand-text.brand-serif em {
-      font-style: italic;
-      font-weight: 400;
-      text-transform: lowercase;
-      letter-spacing: 0;
-    }
-    .brand-text.brand-italic {
-      font-family: 'Times New Roman', Times, serif;
-      font-style: italic;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: 0;
-      font-size: 26px;
-    }
-    .brand-text.brand-light {
-      font-weight: 300;
-      text-transform: none;
-      letter-spacing: 0;
-      font-size: 20px;
+    .brand-logo.brand-invert {
+      filter: brightness(0) invert(1);
     }
     
     @media (max-width: 768px) {
       .brands-row { gap: 36px; }
-      .brand-text { font-size: 18px; }
-      .brand-text.brand-italic { font-size: 22px; }
-      .brand-text.brand-light { font-size: 16px; }
+      .brand-logo { height: 32px; max-width: 130px; }
     }
     @media (max-width: 480px) {
       .brands-row { gap: 24px; }
-      .brand-text { font-size: 15px; }
-      .brand-text.brand-italic { font-size: 18px; }
-      .brand-text.brand-light { font-size: 14px; }
+      .brand-logo { height: 26px; max-width: 110px; }
       .brands-heading { font-size: 14px; margin-bottom: 32px; }
     }
     .wrapper{max-width:1080px;margin:0 auto;padding:0 48px;}
@@ -526,25 +492,28 @@
 <!-- BRANDS / AS SEEN IN -->
 <section id="brands" style="padding:80px 0 60px;">
   <div class="wrapper">
-    <p class="brands-heading reveal">Brands I worked with</p>
+    <p class="brands-heading reveal" style="font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:-0.03em;color:#f5f5f7;line-height:1.1;text-align:center;margin-bottom:48px;">Brands I worked with</p>
     <div class="brands-row reveal">
       <a href="https://batamyanmar.com" target="_blank" rel="noopener" class="brand-item">
-        <span class="brand-text">BATA<sup>MM</sup></span>
-      </a>
-      <a href="https://www.mshmm.com" target="_blank" rel="noopener" class="brand-item">
-        <span class="brand-text brand-serif">MS<em>hmm</em></span>
-      </a>
-      <a href="https://www.theemailboost.com" target="_blank" rel="noopener" class="brand-item">
-        <span class="brand-text brand-light">The Email Boost</span>
-      </a>
-      <a href="https://victoriahospitalmyanmar.com" target="_blank" rel="noopener" class="brand-item">
-        <span class="brand-text brand-serif">VICTORIA</span>
+        <img src="brands/Bata.svg" alt="Bata Myanmar" class="brand-logo" />
       </a>
       <a href="https://magnificencesky.ae" target="_blank" rel="noopener" class="brand-item">
-        <span class="brand-text brand-italic">Magnificence</span>
+        <img src="brands/MSE.svg" alt="MS Hmm" class="brand-logo" />
+      </a>
+      <a href="https://www.theemailboost.com" target="_blank" rel="noopener" class="brand-item">
+        <img src="brands/theemailboost.svg" alt="Email Boost" class="brand-logo" />
+      </a>
+      <a href="https://victoriahospitalmyanmar.com" target="_blank" rel="noopener" class="brand-item">
+        <img src="brands/VTR.svg" alt="Victoria Hospital" class="brand-logo" />
       </a>
       <a href="https://tursian.com" target="_blank" rel="noopener" class="brand-item">
-        <span class="brand-text brand-serif">TURSIAN</span>
+        <img src="brands/TURSIAN.svg" alt="Tursian" class="brand-logo brand-invert" />
+      </a>
+      <a href="#" target="_blank" rel="noopener" class="brand-item">
+        <img src="brands/MSH.svg" alt="Nike Myanmar Sporting House" class="brand-logo" />
+      </a>
+      <a href="https://www.facebook.com/ONEKTG" target="_blank" rel="noopener" class="brand-item">
+        <img src="brands/Oneprintinghouse.svg" alt="One Printing House" class="brand-logo" />
       </a>
     </div>
   </div>
