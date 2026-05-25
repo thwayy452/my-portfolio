@@ -402,6 +402,164 @@
     .hero-link:visited{
       text-decoration:none;
     }
+    /* ===== WELCOME POPUP ===== */
+    .welcome-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      animation: popupFadeIn 0.6s ease 1.5s forwards;
+    }
+    @keyframes popupFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .welcome-overlay.hide {
+      animation: popupFadeOut 0.4s ease forwards;
+    }
+    @keyframes popupFadeOut {
+      from { opacity: 1; }
+      to   { opacity: 0; pointer-events: none; }
+    }
+    .welcome-card {
+      position: relative;
+      background: rgba(18, 18, 20, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      padding: 52px 48px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 113, 227, 0.1);
+      animation: cardSlideUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 1.5s both;
+    }
+    @keyframes cardSlideUp {
+      from { opacity: 0; transform: translateY(40px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .welcome-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .welcome-close:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transform: scale(1.1);
+    }
+    .welcome-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 113, 227, 0.5);
+      margin: 0 auto 24px;
+      display: block;
+      object-fit: cover;
+    }
+    .welcome-wave {
+      font-size: 40px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .welcome-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f5f5f7;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .welcome-name span {
+      color: #0071e3;
+    }
+    .welcome-desc {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+    .welcome-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .welcome-btn-primary {
+      padding: 14px 28px;
+      background: #0071e3;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .welcome-btn-primary:hover {
+      background: #0077ed;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 113, 227, 0.4);
+    }
+    .welcome-btn-secondary {
+      padding: 14px 28px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .welcome-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+    .welcome-tags {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .welcome-tag {
+      padding: 5px 14px;
+      background: rgba(0, 113, 227, 0.12);
+      border: 1px solid rgba(0, 113, 227, 0.3);
+      border-radius: 20px;
+      font-size: 12px;
+      color: #0071e3;
+      font-weight: 500;
+    }
+    @media (max-width: 480px) {
+      .welcome-card { padding: 40px 24px; border-radius: 20px; }
+      .welcome-name { font-size: 24px; }
+      .welcome-desc { font-size: 14px; }
+    }
   </style>
 </head>
 <body>
@@ -410,6 +568,32 @@
 <div id="preloader">
   <div class="pre-logo">Thwvy<span class="pre-dot">.</span></div>
   <div class="pre-bar"><div class="pre-bar-fill"></div></div>
+</div>
+
+<!-- WELCOME POPUP -->
+<div class="welcome-overlay" id="welcomePopup">
+  <div class="welcome-card">
+    <button class="welcome-close" onclick="closeWelcome()">✕</button>
+
+    <span class="welcome-wave">👋</span>
+
+    <h2 class="welcome-name">Hi, I'm <span>Thwvy.</span></h2>
+
+    <div class="welcome-tags">
+      <span class="welcome-tag">Graphic Designer</span>
+      <span class="welcome-tag">3D Artist</span>
+      <span class="welcome-tag">Motion Designer</span>
+    </div>
+
+    <p class="welcome-desc">
+      I turn ideas into visuals that feel alive — from brand campaigns and 3D renders to motion reels. Based in Myanmar, working globally.
+    </p>
+
+    <div class="welcome-btns">
+      <a href="#work" class="welcome-btn-primary" onclick="closeWelcome()">See My Work</a>
+      <button class="welcome-btn-secondary" onclick="closeWelcome()">Just Browsing</button>
+    </div>
+  </div>
 </div>
 
 <nav>
@@ -649,6 +833,32 @@
       btn.disabled = false;
     }
   });
+</script>
+
+<!-- WELCOME POPUP SCRIPT -->
+<script>
+  function closeWelcome() {
+    const popup = document.getElementById('welcomePopup');
+    popup.classList.add('hide');
+    setTimeout(() => popup.style.display = 'none', 400);
+    // Remember for this session
+    sessionStorage.setItem('welcomed', '1');
+  }
+
+  // Close on overlay click
+  document.getElementById('welcomePopup').addEventListener('click', function(e) {
+    if (e.target === this) closeWelcome();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeWelcome();
+  });
+
+  // Don't show again in same session
+  if (sessionStorage.getItem('welcomed')) {
+    document.getElementById('welcomePopup').style.display = 'none';
+  }
 </script>
 </body>
 </html>
